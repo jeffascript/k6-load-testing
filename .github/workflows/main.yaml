@@ -1,0 +1,59 @@
+name: Run k6 Load Tests
+
+on:
+ workflow_dispatch:
+ push:
+  branches:
+   - '*'
+   - 'master'
+
+jobs:
+ test-crocodiles-controllers:
+  runs-on: ubuntu-latest
+
+  strategy:
+   fail-fast: false
+   matrix:
+    action: [create, search]
+
+  steps:
+   - name: Checkout
+     uses: actions/checkout@v2
+
+   - name: Set up Node.js 14
+     uses: actions/setup-node@v2-beta
+     with:
+      node-version: 14
+
+   - name: Cache Node Modules
+     uses: actions/cache@v2
+     with:
+      path: |
+       **/node_modules
+      key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+   - name: Set up k6
+     uses: isandratskiy/k6-setup-action@v1.0.4
+
+   - name: Build project
+     run: |
+      yarn --frozen-lockfile
+      yarn build
+
+   - name: Run '${{ matrix.action }} crocodiles' load test
+     if: always()
+     env:
+      REPORT_SOURCE: ./dist/source/crocodiles_${{ matrix.action }}.json
+      SUMMARY_TREND: avg,max,med,min,p(95),p(90),p(15),p(5)
+     run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.${{ matrix.action }}.js
+
+   - name: Generate HTML Reports
+     if: always()
+     run: yarn report
+
+   - name: Upload K6 Reports
+     uses: actions/upload-artifact@v2
+     if: always()
+     with:
+      name: k6 reports
+      path: ./dist/reports
