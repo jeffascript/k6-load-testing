@@ -32,10 +32,10 @@ export const options = {
 	}
 };
 
-export const basicTest = () => {
-	http.get('https://cloud.stage.onbuildingminds.com');
-	sleep(1);
-};
+// export const basicTest = () => {
+// 	http.get('https://cloud.stage.onbuildingminds.com');
+// 	sleep(1);
+// };
 
 
 export default () => {
