@@ -32,6 +32,12 @@ export const options = {
 	}
 };
 
+export const basicTest = () => {
+	http.get('https://cloud.stage.onbuildingminds.com');
+	sleep(1);
+};
+
+
 export default () => {
 	const resp = http.get('https://cloud.stage.onbuildingminds.com');
 	const success = check(resp, { 'status was 200': r => r.status == 200 });
