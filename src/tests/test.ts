@@ -17,17 +17,17 @@ The following stages configuration will result in up-flat-down ramping
 export const options = {
 	stages: [
 		// Ramp-up from 1 to 100 VUs in 10s
-		{ duration: '15s', target: 100 },
+		{ duration: '10s', target: 50 },
 
 		// Stay at rest on 100 VUs for 5s i.e: maintain 100vus at 10s
-		{ duration: '30s', target: 100 },
+		{ duration: '15s', target: 50},
 
 		// Ramp-down from 5 to 0 VUs for 5s
 		{ duration: '15s', target: 0 }
 	],
 
 	thresholds: {
-        error_rate: ['rate<0.1'],
+        error_rate: ['rate<0.1'],// <10% errors
         errors: ["count<1"]
 	}
 };

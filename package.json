@@ -3,7 +3,7 @@
 		"build": "rm -rf ./dist && parcel build --target k6 src/test/**.ts && mkdir ./dist/reports && mkdir ./dist/source",
 		"clean": "rm -rf ./dist && rm -rf ./parcel-cache",
 		"test1": "k6 run dist/crocodiles.create.js",
-		"test": "k6 run src/test.ts",
+		"test": "k6 run src/tests/test.ts",
 		"test2": "k6 run \"$npm_config_file1\"",
 		"lint": "eslint .",
 		"prettier": "prettier --write .",
