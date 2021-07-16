@@ -5,6 +5,7 @@
 		"test1": "k6 run dist/crocodiles.create.js",
 		"test": "k6 run src/tests/test.ts",
 		"test2": "k6 run \"$npm_config_file1\"",
+		"test4": "k6 run \"$npm_config_file\"",
 		"lint": "eslint .",
 		"prettier": "prettier --write .",
 		"report": "node ./src/utils/report.js"
